@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pesan Buku Voucher</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+    .wrapper {
+      padding: 16px;
+    }
+    form {
+      background-color: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      max-width: 480px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .deskripsi {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 20px;
+      text-align: justify;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    select, input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .checkbox-group label {
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .checkbox-group input[type="checkbox"] {
+      transform: scale(1.1);
+    }
+    .note {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #d35400;
+      background: #fff6e5;
+      padding: 12px;
+      border-radius: 8px;
+    }
+    .note b {
+      display: block;
+      font-size: 16px;
+      color: #c0392b;
+      margin-bottom: 6px;
+    }
+    button {
+      width: 100%;
+      margin-top: 20px;
+      background-color: #25d366;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #1ebe5d;
+    }
+    small {
+      display: block;
+      font-size: 12px;
+      color: #999;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <form onsubmit="sendToWhatsApp(); return false;">
+      <h2>Pesan "Buku Voucher"</h2>
+      <div class="deskripsi">
+        Voucher merupakan lembaran kecil yang digunakan sebagai sarana promosi untuk merangsang pelanggan agar datang lagi atau memakai jasa kita lebih lagi dengan memberikan keuntungan kepada pelanggan seperti potongan harga atau bahkan dapat ditukarkan dengan produk dan jasa lain namun voucher biasanya tidak dapat diuangkan. Voucher dapat menjadi sarana promosi yang lebih efektif dari pada iklan karena voucher memberikan manfaat langsung kepada pelanggan daripada sekedar iklan. Sehingga akan memaksa pelanggan untuk kembali menggunakan produk atau jasa kita.
+      </div>
+
+      <label>Nama Anda</label>
+      <input type="text" id="nama" required>
+
+      <label>Nomor WhatsApp Anda</label>
+      <input type="tel" id="nowa" pattern="[0-9]+" required>
+
+      <label>Ukuran Buku</label>
+      <select id="ukuran">
+        <option value="14 x 6 cm">14 x 6 cm</option>
+        <option value="15 x 7 cm">15 x 7 cm</option>
+      </select>
+
+      <label>Jenis Kertas</label>
+      <select id="kertas">
+        <option value="Art paper 120 gr">Art paper 120 gr</option>
+        <option value="Art paper 150 gr">Art paper 150 gr</option>
+        <option value="Art paper 260 gr">Art paper 260 gr</option>
+        <option value="Matte paper 150 gr">Matte paper 150 gr</option>
+        <option value="Matte paper 200 gr">Matte paper 200 gr</option>
+        <option value="BC Manila">BC Manila</option>
+        <option value="Blushwhite">Blushwhite</option>
+      </select>
+
+      <label>Finishing Tambahan</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" id="numerator"> <span>Numerator (Nomor Seri)</span></label>
+        <label><input type="checkbox" id="barcode"> <span>Barcode (Kode Batang)</span></label>
+        <label><input type="checkbox" id="porporasi"> <span>Porporasi (Garis Sobek)</span></label>
+        <label><input type="checkbox" id="cutting"> <span>Cutting Laser (Potong Sesuai Bentuk)</span></label>
+      </div>
+
+      <label>Jumlah Buku</label>
+      <input type="number" id="jumlah" min="1" required>
+      <small>1 buku isi 100 lembar voucher</small>
+
+      <label>Kapan Dibutuhkan?</label>
+      <input type="date" id="tanggal" required>
+
+      <label>Pada Jam Berapa?</label>
+      <input type="time" id="jam" required>
+
+      <label>Catatan Khusus untuk Admin Kami</label>
+      <textarea id="catatan" rows="4"></textarea>
+
+      <div class="note">
+        <b>Penting !</b>
+        Estimasi Dateline Yang Anda Atur Bisa Berubah Sesuai Kondisi Antrian, Anda Bisa Atur Negosiasi Waktu Dateline Dengan Admin Kami. <b>"Pastikan File Anda Ready / Siap Print"</b>
+      </div>
+
+      <button type="submit">Cek Harga ke Admin Metropolis Print</button>
+    </form>
+  </div>
+
+  <script>
+    function formatTanggalIndo(tanggalInput) {
+      const bulanIndo = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+      const hariIndo = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+      const dateObj = new Date(tanggalInput);
+      const hari = hariIndo[dateObj.getDay()];
+      const tanggal = dateObj.getDate();
+      const bulan = bulanIndo[dateObj.getMonth()];
+      const tahun = dateObj.getFullYear();
+      return `${hari}, ${tanggal} ${bulan} ${tahun}`;
+    }
+
+    function sendToWhatsApp() {
+      const adminWa = "6282335222268";
+      const nama = document.getElementById("nama").value;
+      const nowa = document.getElementById("nowa").value;
+      const ukuran = document.getElementById("ukuran").value;
+      const kertas = document.getElementById("kertas").value;
+      const jumlah = document.getElementById("jumlah").value;
+      const tanggal = formatTanggalIndo(document.getElementById("tanggal").value);
+      const jam = document.getElementById("jam").value;
+      const catatan = document.getElementById("catatan").value || "-";
+
+      const finishing = [];
+      if (document.getElementById("numerator").checked) finishing.push("Numerator");
+      if (document.getElementById("barcode").checked) finishing.push("Barcode");
+      if (document.getElementById("porporasi").checked) finishing.push("Porporasi");
+      if (document.getElementById("cutting").checked) finishing.push("Cutting Laser");
+
+      const finishingText = finishing.length > 0 ? finishing.join(", ") : "-";
+
+      const pesan =
+        `📌 Pemesanan Buku Voucher\n\n` +
+        `👤 Nama: ${nama}\n` +
+        `📱 No. WA: ${nowa}\n` +
+        `📏 Ukuran Buku: ${ukuran}\n` +
+        `📄 Jenis Kertas: ${kertas}\n` +
+        `✨ Finishing: ${finishingText}\n` +
+        `📚 Jumlah Buku: ${jumlah} buku (1 buku isi 100 lembar)\n` +
+        `🗓️ Tanggal: ${tanggal}\n` +
+        `⏰ Jam: ${jam}\n` +
+        `📝 Catatan: ${catatan}`;
+
+      const url = `https://wa.me/${adminWa}?text=${encodeURIComponent(pesan)}`;
+      window.open(url, "_blank");
+    }
+  </script>
+</body>
+</html>
